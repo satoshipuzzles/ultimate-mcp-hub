@@ -23,6 +23,14 @@
       "dest": "dist/index.js"
     },
     {
+      "src": "/sse",
+      "dest": "dist/index.js"
+    },
+    {
+      "src": "/mcp",
+      "dest": "dist/index.js"
+    },
+    {
       "handle": "filesystem"
     },
     {

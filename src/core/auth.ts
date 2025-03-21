@@ -16,10 +16,9 @@ export interface TokenPayload {
  */
 export function generateToken(payload: TokenPayload): string {
   const secret = process.env.JWT_SECRET || 'fallback-secret-do-not-use-in-production';
-  const expiresIn = process.env.JWT_EXPIRATION || '1d';
   
-  // Cast to any to avoid type issues with the JWT library
-  return jwt.sign(payload, secret as any, { expiresIn });
+  // Simplify by removing options to fix type issue
+  return jwt.sign(payload, secret);
 }
 
 /**
