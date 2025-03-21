@@ -27,6 +27,11 @@ const mcpTools = [
   }
 ];
 
+// Format SSE data properly
+function formatSSE(event, data) {
+  return `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
+}
+
 export default function handler(req, res) {
   // Set SSE headers
   res.setHeader('Content-Type', 'text/event-stream');
@@ -35,17 +40,12 @@ export default function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   
   // Send initial connection message
-  res.write('event: connected\n');
-  res.write(`data: ${JSON.stringify({ message: 'Connected to MCP Hub' })}\n\n`);
+  res.write(formatSSE('connected', { message: 'Connected to MCP Hub' }));
   
   // Send tool definitions
-  res.write('event: tools\n');
-  res.write(`data: ${JSON.stringify({ tools: mcpTools })}\n\n`);
+  res.write(formatSSE('tools', { tools: mcpTools }));
   
-  // Note: Vercel has a timeout for serverless functions, typically 10 seconds
-  // This means the connection will close after this time, but it should be
-  // enough for Cursor to get the initial connection and tools data
-  
-  // End the response after sending the essential data
+  // For Vercel's serverless functions, we need to end the connection
+  // after sending the initial data since they don't support long-lived connections
   res.end();
 } 

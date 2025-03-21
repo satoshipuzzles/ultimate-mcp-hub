@@ -9,6 +9,10 @@
       }
     },
     {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "index.html",
       "use": "@vercel/static"
     }
@@ -16,7 +20,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "dist/index.js"
+      "dest": "/api/$1"
     },
     {
       "src": "/health",
@@ -24,11 +28,11 @@
     },
     {
       "src": "/sse",
-      "dest": "dist/index.js"
+      "dest": "/api/sse"
     },
     {
       "src": "/mcp",
-      "dest": "dist/index.js"
+      "dest": "/api/mcp"
     },
     {
       "handle": "filesystem"
